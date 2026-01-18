@@ -160,6 +160,26 @@ const cursos = [
  {"codigo":"3023","nombre":"Física 2","creditos":6,"prereq":["3013","3013"],"semestre":4}, 
  {"codigo":"3087","nombre":"Legislación 1", "creditos": 3, "prereq": ["3011"], "semestre": 4}, 
  {"codigo":"3169","nombre":"Introducción a la Ingeniería Petrolera", "creditos": 3, "prereq": ["3013","3014"], "semestre": 4},
+ {"codigo":"3170","nombre":"Topografía 2","creditos":7,"prereq":["3166"],"semestre":5}, 
+ {"codigo":"3031","nombre":"Resistencia de materiales 1","creditos":5,"prereq":["3022","3025"],"semestre":5}, 
+ {"codigo":"3171","nombre":"Materiales de costrucción 1","creditos":6,"prereq":["3167"],"semestre":5}, 
+ {"codigo":"3172","nombre":"Mecánica de fluidos","creditos":5,"prereq":["3021","3025"],"semestre":5}, 
+ {"codigo":"3028","nombre":"Matemática aplicada 1","creditos":5,"prereq":["3021","3022"],"semestre":5}, 
+ {"codigo":"3173","nombre":"Geología estructural","creditos":3,"prereq":["3167"],"semestre":5}, 
+ {"codigo":"3174","nombre":"Geofísica","creditos":3,"prereq":["3022","3167"],"semestre":5}, 
+ {"codigo":"3175","nombre":"Perforación de pozos 1","creditos":4,"prereq":["3022","3169"],"semestre":5}, 
+ {"codigo":"3176","nombre":"Petrologia","creditos":4,"prereq":["3167"],"semestre":5},
+ {"codigo":"3177","nombre":"Geología del petróleo","creditos":4,"prereq":["3167"],"semestre":5}, 
+ {"codigo":"3178","nombre":"Topografía 3","creditos":6,"prereq":["3170","3028"],"semestre":6}, 
+ {"codigo":"3040","nombre":"Resistencia de materiales 2","creditos":5,"prereq":["3031"],"semestre":6}, 
+ {"codigo":"3179","nombre":"Instalaciones eléctricas (civil)","creditos":4,"prereq":["3006","3162","3007"],"semestre":6},
+ {"codigo":"3180","nombre":"materiales de costrucción 2","creditos":7,"prereq":["3171","3031"],"semestre":6}, 
+ {"codigo":"3181","nombre":"Mecánica de suelos 1","creditos":5,"prereq":["3031","3167"],"semestre":6}, 
+ {"codigo":"3182","nombre":"Hidráulica","creditos":5,"prereq":["3172"],"semestre":6}, 
+ {"codigo":"3183","nombre":"Ingeniería económica 1","creditos":4,"prereq":["3028"],"semestre":6}, 
+ {"codigo":"3184","nombre":"Psícologia Industrial","creditos":3,"prereq":["3090"],"semestre":6}, 
+ {"codigo":"3185","nombre":"Legislación 2","creditos":3,"prereq":["3090"],"semestre":6}, 
+ {"codigo":"3099","nombre":"Ingeniería de costos","creditos":4,"prereq":["3090"],"semestre":6}, 
   
 ];
 
@@ -169,6 +189,8 @@ const obligatoriosFijos = new Set([
   "3011","3006","3007","3161","3162", 
   "3013","3014","3163","3164", 
   "3166","3021","3022","3025","3090","3167", 
+  "3170","3031","3171","3172","3028",
+  "3040","3179","3180","3181","3182","3183", 
 ]);
 
 /* ================= MAPA ================= */
