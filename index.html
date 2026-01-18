@@ -144,14 +144,31 @@ const cursos = [
   {"codigo":"3007","nombre":"Física Básica","creditos":5,"prereq":["3000"],"semestre":2},
   {"codigo":"3161","nombre":"Química para Ingeniería Civil","creditos":6,"prereq":["3000","3001"],"semestre":2},
   {"codigo":"3162","nombre":"Dibujo Costructivo para Ingeniería","creditos":6,"prereq":["3004"],"semestre":2},
-  {"codigo":"3006","nombre":"Área de Matemática Básica 2","creditos":9,"prereq":["3000"],"semestre":2},
-  {"codigo":"3013","nombre":"Matemática Intermedia 1","creditos":9,"prereq":["3006"],"semestre":3}
+  {"codigo":"3013","nombre":"Área Matemática Intermedia 1","creditos":9,"prereq":["3006"],"semestre":3},
+ {"codigo":"3014","nombre":"Física 1","creditos":5,"prereq":["3006","3007"],"semestre":3},
+ {"codigo":"3163","nombre":"Ecología","creditos":4,"prereq":["3161"],"semestre":3}, 
+ {"codigo":"3164","nombre":"Prácticas Iniciales","creditos":0,"prereq":["3006","3162","3007"],"semestre":3},
+ {"codigo":"3019","nombre":"Ética Profesional","creditos":2,"prereq":["3007"],"semestre":3}, 
+ {"codigo":"3089","nombre":"Logica","creditos":1,"prereq":["3011"],"semestre":3}, 
+ {"codigo":"3036","nombre":"Filosofia de la ciencia","creditos":1,"prereq":["3011"],"semestre":3}, 
+ {"codigo":"3166","nombre":"Topografía 1","creditos":7,"prereq":["3013", "3162"],"semestre":4},
+ {"codigo":"3021","nombre":"Área Matemática Intermedia 2","creditos":6,"prereq":["3013"],"semestre":4}, 
+ {"codigo":"3022","nombre":"Área Matemática Intermedia 3","creditos":6,"prereq":["3013"],"semestre":4}, 
+ {"codigo":"3025","nombre":"Mecánica Analítica 1","creditos":4,"prereq":["3013","3014"],"semestre":4}, 
+ {"codigo":"3090","nombre":"Estadística 1","creditos":5,"prereq":["3013","3005"],"semestre":4}, 
+ {"codigo":"3167","nombre":"Geología","creditos":4,"prereq":["3163","3014"],"semestre":4}, 
+ {"codigo":"3023","nombre":"Física 2","creditos":6,"prereq":["3013","3013"],"semestre":4}, 
+ {"codigo":"3087","nombre":"Legislación 1", "creditos": 3, "prereq": ["3011"], "semestre": 4}, 
+ {"codigo":"3169","nombre":"Introducción a la Ingeniería Petrolera", "creditos": 3, "prereq": ["3013","3014"], "semestre": 4},
+  
 ];
 
 /* ================= OBLIGATORIOS ================= */
 const obligatoriosFijos = new Set([
   "3005","3003","3000","3006","3013",
   "3011","3006","3007","3161","3162", 
+  "3013","3014","3163","3164", 
+  "3166","3021","3022","3025","3090","3167", 
 ]);
 
 /* ================= MAPA ================= */
