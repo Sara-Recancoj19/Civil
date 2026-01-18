@@ -200,6 +200,24 @@ const cursos = [
  {"codigo":"3203","nombre":"Ingeniería Sanitaria 2","creditos":4,"prereq":["3189"],"semestre":8}, 
  {"codigo":"3204","nombre":"Investigación 1","creditos":4,"prereq":["3194","3189","3187","3186"],"semestre":8},
  {"codigo":"3205","nombre":"Fundamentos de administración","creditos":4,"prereq":["3193"],"semestre":8}, 
+ {"codigo":"3206","nombre":"Pavimentos","creditos":4,"prereq":["3171","3181","3195"],"semestre":9}, 
+ {"codigo":"3207","nombre":"Ingeniería de tránsito y transportes","creditos":4,"prereq":["3186"],"semestre":9}, 
+ {"codigo":"3208","nombre":"Diseño estructural 1","creditos":6,"prereq":["3187","3197"],"semestre":9}, 
+ {"codigo":"3209","nombre":"Cimentaciones 2","creditos":4,"prereq":["3198"],"semestre":9}, 
+ {"codigo":"3210","nombre":"Obras hidráulicas","creditos":4,"prereq":["3198","3190"],"semestre":9}, 
+ {"codigo":"3211","nombre":"Preparación y evaluación de proyectos","creditos":5,"prereq":["3183","3200"],"semestre":9},
+ {"codigo":"3212","nombre":"Saneamiento Ambiental","creditos":3,"prereq":["3202","3203"],"semestre":9}, 
+ {"codigo":"3213","nombre":"Gestión de desastres","creditos":4,"prereq":["3200"],"semestre":9}, 
+ {"codigo":"3214","nombre":"Puentes","creditos":5,"prereq":["3208","3209"],"semestre":10}, 
+ {"codigo":"3215","nombre":"Diseño estructural 2","creditos":6,"prereq":["3208"],"semestre":10}, 
+ {"codigo":"3216","nombre":"Métodos de construcción y supervisión de obras","creditos":4,"prereq":["3208"],"semestre":10}, 
+ {"codigo":"3217","nombre":"Urbanismo","creditos":4,"prereq":["3211"],"semestre":10}, 
+ {"codigo":"3218","nombre":"Planeamiento","creditos":4,"prereq":["3211"],"semestre":10}, 
+ {"codigo":"3219","nombre":"Costos, presupuestos y avalúos":5,"prereq":["3208","3209","3206"],"semestre":10}, 
+ {"codigo":"3220","nombre":"Gestión de proyectos","creditos":4,"prereq":["3211"],"semestre":10}, 
+ {"codigo":"3221","nombre":"Prácticas finales de Ingeniería Civil","creditos":0,"prereq":["3208","3209","3194"],"semestre":10},
+ {"codigo":"3222","nombre":"Seminario de Investigación EPS, Civil","creditos":3,"prereq":["3212","3204"],"semestre":10}, 
+ {"codigo":"3223","nombre":"Seminario de Investigación Civil","creditos":3,"prereq":["3212","3204"],"semestre":10}
   
 ];
 
@@ -213,6 +231,8 @@ const obligatoriosFijos = new Set([
   "3040","3179","3180","3181","3182","3183", 
   "3186","3187","3188","3189","3190","3194", 
   "3195","3197","3198","3200","3202","3203","3204",
+  "3206","3208","3209","3211","3212",
+  "3214","3215","3216","3218","3219","3221","3223"
 ]);
 
 /* ================= MAPA ================= */
