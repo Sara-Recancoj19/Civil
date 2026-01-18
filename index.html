@@ -180,6 +180,26 @@ const cursos = [
  {"codigo":"3184","nombre":"Psícologia Industrial","creditos":3,"prereq":["3090"],"semestre":6}, 
  {"codigo":"3185","nombre":"Legislación 2","creditos":3,"prereq":["3090"],"semestre":6}, 
  {"codigo":"3099","nombre":"Ingeniería de costos","creditos":4,"prereq":["3090"],"semestre":6}, 
+ {"codigo":"3186","nombre":"Vías terrestres 1","creditos":6,"prereq":["3181","3170"],"semestre":7}, 
+ {"codigo":"3187","nombre":"análisis estructural","creditos":5,"prereq":["3040"],"semestre":7},
+ {"codigo":"3188","nombre":"Concreto armado 1","creditos":5,"prereq":["3040","3180"],"semestre":7}, 
+ {"codigo":"3189","nombre":"Hidrología","creditos":6,"prereq":["3090","3182","3170"],"semestre":7},
+ {"codigo":"3190","nombre":"Hidráulica de canles","creditos":4,"prereq":["3182"],"semestre":7}, 
+ {"codigo":"3191","nombre":"Máquinas hidráulicas","creditos":6,"prereq":["3182"],"semestre":7}, 
+ {"codigo":"3192","nombre":"Ingeniería Económica 2","creditos":4,"prereq":["3183"],"semestre":7}, 
+ {"codigo":"3193","nombre":"Administración de recursos humanos","creditos":6,"prereq":["3184"],"semestre":7}, 
+ {"codigo":"3194","nombre":"Prácticas intermedias","creditos":0,"prereq":["3180","3164"],"semestre":7}, 
+ {"codigo":"3195","nombre":"Vías terrestres 2","creditos":4,"prereq":["3186","3188"],"semestre":8}, 
+ {"codigo":"3196","nombre":"Tipología estructural","creditos":3,"prereq":["3031"],"semestre":8}, 
+ {"codigo":"3197","nombre":"Concreto armado 2","creditos":5,"prereq":["3188"],"semestre":8}, 
+ {"codigo":"3198","nombre":"Cimentanciones 1","creditos":4,"prereq":["3187","3188"],"semestre":8}, 
+ {"codigo":"3199","nombre":"Aguas subterraneas","creditos":3,"prereq":["3189"],"semestre":8}, 
+ {"codigo":"3200","nombre":"Introducción al estudio de impacto ambiental","creditos":4,"prereq":["3011","3183","3163","3189"],"semestre":8}, 
+ {"codigo":"3201","nombre":"Análisis mecánico","creditos":5,"prereq":["3025","3187"],"semestre":8}, 
+ {"codigo":"3202","nombre":"Ingeniería Sanitaria 1","creditos":4,"prereq":["3189"],"semestre":8}, 
+ {"codigo":"3203","nombre":"Ingeniería Sanitaria 2","creditos":4,"prereq":["3189"],"semestre":8}, 
+ {"codigo":"3204","nombre":"Investigación 1","creditos":4,"prereq":["3194","3189","3187","3186"],"semestre":8},
+ {"codigo":"3205","nombre":"Fundamentos de administración","creditos":4,"prereq":["3193"],"semestre":8}, 
   
 ];
 
@@ -191,6 +211,8 @@ const obligatoriosFijos = new Set([
   "3166","3021","3022","3025","3090","3167", 
   "3170","3031","3171","3172","3028",
   "3040","3179","3180","3181","3182","3183", 
+  "3186","3187","3188","3189","3190","3194", 
+  "3195","3197","3198","3200","3202","3203","3204",
 ]);
 
 /* ================= MAPA ================= */
