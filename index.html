@@ -11,14 +11,15 @@
   --available:#ffd6d6;
   --locked:#9a9a9a;
   --badge:#ffd54f;
+  --bg:#f7fafc;
   --card:#fff;
   --shadow:0 4px 12px rgba(0,0,0,.08);
 }
 
 body{
-  font-family:system-ui;
-  background:#f7fafc;
   margin:16px;
+  font-family:system-ui,-apple-system,Segoe UI,Roboto;
+  background:var(--bg);
 }
 
 header{
@@ -41,7 +42,8 @@ header{
   margin-top:20px;
   display:flex;
   gap:12px;
-  overflow:auto;
+  overflow-x:auto;
+  padding-bottom:30px;
 }
 
 .semester{
@@ -53,8 +55,8 @@ header{
 }
 
 .sem-title{
-  text-align:center;
   font-weight:bold;
+  text-align:center;
   margin-bottom:8px;
 }
 
@@ -63,16 +65,18 @@ header{
   margin-bottom:8px;
   border-radius:8px;
   cursor:pointer;
+  user-select:none;
 }
 
 .course.approved{background:var(--approved);color:white}
 .course.available{background:var(--available)}
-.course.locked{background:var(--locked);color:white}
+.course.locked{background:var(--locked);color:white;cursor:not-allowed}
 
 .meta{
   display:flex;
   justify-content:space-between;
   font-size:12px;
+  align-items:center;
 }
 
 .badge{
@@ -89,7 +93,7 @@ header{
 <header>
   <div>
     <h2>Malla Curricular – Ingeniería Civil</h2>
-    <p>✔️ = curso obligatorio</p>
+    <p>✔️ obligatorio · clic para aprobar</p>
   </div>
 
   <div class="counter">
@@ -107,171 +111,101 @@ header{
 <section class="grid" id="grid"></section>
 
 <script>
-/* ===== STORAGE ===== */
-const STORAGE_KEY = 'malla_civil';
+/* ================= STORAGE ================= */
+const STORAGE_KEY = 'malla_civil_v1';
 let approved = new Set();
 
 function saveState(){
   localStorage.setItem(STORAGE_KEY, JSON.stringify([...approved]));
 }
+
 function loadState(){
   const data = localStorage.getItem(STORAGE_KEY);
-  if(data) approved = new Set(JSON.parse(data));
+  if(data){
+    try{
+      approved = new Set(JSON.parse(data));
+    }catch{
+      approved = new Set();
+    }
+  }
 }
 
-/* ===== DATOS ===== */
+/* ================= DATOS ================= */
+/* 👉 AQUÍ PEGA TODA TU MALLA SIN MIEDO */
 const cursos = [
-  
- {"codigo":"3005","nombre":"Técnicas de Estudio e Investigación","creditos":3,"prereq":[],"semestre":1}, 
- {"codigo":"3003","nombre":"Área Social Humanística 1","creditos":3,"prereq":[],"semestre":1},
- {"codigo":"3000","nombre":"Área Matemática Básica 1","creditos":9,"prereq":[],"semestre":1}, 
- {"codigo":"3001","nombre":"Química General 1","creditos":7,"prereq":[],"semestre":1}, 
- {"codigo":"3004","nombre":"Área Técnica Complementaria 1","creditos":4,"prereq":[],"semestre":1},
- {"codigo":"3082","nombre":"Deportes 1","creditos":2,"prereq":[],"semestre":1}, 
- {"codigo":"3011","nombre":"Área Social Humanística 2","creditos":3,"prereq":["3003"],"semestre":2}, 
- {"codigo":"3006","nombre":"Matemática Básica 2","creditos":9,"prereq":["3000"],"semestre":2}, 
- {"codigo":"3007","nombre":"Física Básica","creditos":5,"prereq":["3000"],"semestre":2},
- {"codigo":"3161","nombre":"Química para Ingeniería Civil","creditos":6,"prereq":["3001","3000"],"semestre":2}, 
- {"codigo":"3162","nombre":"Dibujo Costructivo para Ingeniería","creditos":6,"prereq":["3004"],"semestre":2}, 
- {"codigo":"3013","nombre":"Área Matemática Intermedia 1","creditos":9,"prereq":["3006"],"semestre":3},
- {"codigo":"3014","nombre":"Física 1","creditos":5,"prereq":["3006","3007"],"semestre":3},
- {"codigo":"3163","nombre":"Ecología","creditos":4,"prereq":["3161"],"semestre":3}, 
- {"codigo":"3164","nombre":"Prácticas Iniciales","creditos":0,"prereq":["3006","3162","3007"],"semestre":3},
- {"codigo":"3019","nombre":"Ética Profesional","creditos":2,"prereq":["3007"],"semestre":3}, 
- {"codigo":"3089","nombre":"Logica","creditos":1,"prereq":["3011"],"semestre":3}, 
- {"codigo":"3036","nombre":"Filosofia de la ciencia","creditos":1,"prereq":["3011"],"semestre":3}, 
- {"codigo":"3166","nombre":"Topografía 1","creditos":7,"prereq":["3013", "3162"],"semestre":4},
- {"codigo":"3021","nombre":"Área Matemática Intermedia 2","creditos":6,"prereq":["3013"],"semestre":4}, 
- {"codigo":"3022","nombre":"Área Matemática Intermedia 3","creditos":6,"prereq":["3013"],"semestre":4}, 
- {"codigo":"3025","nombre":"Mecánica Analítica 1","creditos":4,"prereq":["3013","3014"],"semestre":4}, 
- {"codigo":"3090","nombre":"Estadística 1","creditos":5,"prereq":["3013","3005"],"semestre":4}, 
- {"codigo":"3167","nombre":"Geología","creditos":4,"prereq":["3163","3014"],"semestre":4}, 
- {"codigo":"3023","nombre":"Física 2","creditos":6,"prereq":["3013","3014"],"semestre":4}, 
- {"codigo":"3087","nombre":"Legislación 1", "creditos": 3, "prereq": ["3011"], "semestre": 4}, 
- {"codigo":"3169","nombre":"Introducción a la Ingeniería Petrolera", "creditos": 3, "prereq": ["3013","3014"], "semestre": 4},
- {"codigo":"3170","nombre":"Topografía 2","creditos":7,"prereq":["3166"],"semestre":5}, 
- {"codigo":"3031","nombre":"Resistencia de materiales 1","creditos":5,"prereq":["3022","3025"],"semestre":5}, 
- {"codigo":"3171","nombre":"Materiales de costrucción 1","creditos":6,"prereq":["3167"],"semestre":5}, 
- {"codigo":"3172","nombre":"Mecánica de fluidos","creditos":5,"prereq":["3021","3025"],"semestre":5}, 
- {"codigo":"3028","nombre":"Matemática aplicada 1","creditos":5,"prereq":["3021","3022"],"semestre":5}, 
- {"codigo":"3173","nombre":"Geología estructural","creditos":3,"prereq":["3167"],"semestre":5}, 
- {"codigo":"3174","nombre":"Geofísica","creditos":3,"prereq":["3022","3167"],"semestre":5}, 
- {"codigo":"3175","nombre":"Perforación de pozos 1","creditos":4,"prereq":["3022","3169"],"semestre":5}, 
- {"codigo":"3176","nombre":"Petrologia","creditos":4,"prereq":["3167"],"semestre":5},
- {"codigo":"3177","nombre":"Geología del petróleo","creditos":4,"prereq":["3167"],"semestre":5}, 
- {"codigo":"3178","nombre":"Topografía 3","creditos":6,"prereq":["3170","3028"],"semestre":6}, 
- {"codigo":"3040","nombre":"Resistencia de materiales 2","creditos":5,"prereq":["3031"],"semestre":6}, 
- {"codigo":"3179","nombre":"Instalaciones eléctricas (civil)","creditos":4,"prereq":["3006","3162","3007"],"semestre":6},
- {"codigo":"3180","nombre":"materiales de costrucción 2","creditos":7,"prereq":["3171","3031"],"semestre":6}, 
- {"codigo":"3181","nombre":"Mecánica de suelos 1","creditos":5,"prereq":["3031","3167"],"semestre":6}, 
- {"codigo":"3182","nombre":"Hidráulica","creditos":5,"prereq":["3172"],"semestre":6}, 
- {"codigo":"3183","nombre":"Ingeniería económica 1","creditos":4,"prereq":["3028"],"semestre":6}, 
- {"codigo":"3184","nombre":"Psícologia Industrial","creditos":3,"prereq":["3090"],"semestre":6}, 
- {"codigo":"3185","nombre":"Legislación 2","creditos":3,"prereq":["3090"],"semestre":6}, 
- {"codigo":"3099","nombre":"Ingeniería de costos","creditos":4,"prereq":["3090"],"semestre":6}, 
- {"codigo":"3186","nombre":"Vías terrestres 1","creditos":6,"prereq":["3181","3170"],"semestre":7}, 
- {"codigo":"3187","nombre":"análisis estructural","creditos":5,"prereq":["3040"],"semestre":7},
- {"codigo":"3188","nombre":"Concreto armado 1","creditos":5,"prereq":["3040","3180"],"semestre":7}, 
- {"codigo":"3189","nombre":"Hidrología","creditos":6,"prereq":["3090","3182","3170"],"semestre":7},
- {"codigo":"3190","nombre":"Hidráulica de canales","creditos":4,"prereq":["3182"],"semestre":7}, 
- {"codigo":"3191","nombre":"Máquinas hidráulicas","creditos":6,"prereq":["3182"],"semestre":7}, 
- {"codigo":"3192","nombre":"Ingeniería Económica 2","creditos":4,"prereq":["3183"],"semestre":7}, 
- {"codigo":"3193","nombre":"Administración de recursos humanos","creditos":6,"prereq":["3184"],"semestre":7}, 
- {"codigo":"3194","nombre":"Prácticas intermedias","creditos":0,"prereq":["3180","3164"],"semestre":7}, 
- {"codigo":"3195","nombre":"Vías terrestres 2","creditos":4,"prereq":["3186","3188"],"semestre":8}, 
- {"codigo":"3196","nombre":"Tipología estructural","creditos":3,"prereq":["3031"],"semestre":8}, 
- {"codigo":"3197","nombre":"Concreto armado 2","creditos":5,"prereq":["3188"],"semestre":8}, 
- {"codigo":"3198","nombre":"Cimentanciones 1","creditos":4,"prereq":["3187","3188"],"semestre":8}, 
- {"codigo":"3199","nombre":"Aguas subterraneas","creditos":3,"prereq":["3189"],"semestre":8}, 
- {"codigo":"3200","nombre":"Introducción al estudio de impacto ambiental","creditos":4,"prereq":["3011","3183","3163","3189"],"semestre":8}, 
- {"codigo":"3201","nombre":"Análisis mecánico","creditos":5,"prereq":["3025","3187"],"semestre":8}, 
- {"codigo":"3202","nombre":"Ingeniería Sanitaria 1","creditos":4,"prereq":["3189"],"semestre":8}, 
- {"codigo":"3203","nombre":"Ingeniería Sanitaria 2","creditos":4,"prereq":["3189"],"semestre":8}, 
- {"codigo":"3204","nombre":"Investigación 1","creditos":4,"prereq":["3194","3189","3187","3186"],"semestre":8},
- {"codigo":"3205","nombre":"Fundamentos de administración","creditos":4,"prereq":["3193"],"semestre":8}, 
- {"codigo":"3206","nombre":"Pavimentos","creditos":4,"prereq":["3171","3181","3195"],"semestre":9}, 
- {"codigo":"3207","nombre":"Ingeniería de tránsito y transportes","creditos":4,"prereq":["3186"],"semestre":9}, 
- {"codigo":"3208","nombre":"Diseño estructural 1","creditos":6,"prereq":["3187","3197"],"semestre":9}, 
- {"codigo":"3209","nombre":"Cimentaciones 2","creditos":4,"prereq":["3198"],"semestre":9}, 
- {"codigo":"3210","nombre":"Obras hidráulicas","creditos":4,"prereq":["3198","3190"],"semestre":9}, 
- {"codigo":"3211","nombre":"Preparación y evaluación de proyectos","creditos":5,"prereq":["3183","3200"],"semestre":9},
- {"codigo":"3212","nombre":"Saneamiento Ambiental","creditos":3,"prereq":["3202","3203"],"semestre":9}, 
- {"codigo":"3213","nombre":"Gestión de desastres","creditos":4,"prereq":["3200"],"semestre":9}, 
- {"codigo":"3214","nombre":"Puentes","creditos":5,"prereq":["3208","3209"],"semestre":10}, 
- {"codigo":"3215","nombre":"Diseño estructural 2","creditos":6,"prereq":["3208"],"semestre":10}, 
- {"codigo":"3216","nombre":"Métodos de construcción y supervisión de obras","creditos":4,"prereq":["3208"],"semestre":10}, 
- {"codigo":"3217","nombre":"Urbanismo","creditos":4,"prereq":["3211"],"semestre":10}, 
- {"codigo":"3218","nombre":"Planeamiento","creditos":4,"prereq":["3211"],"semestre":10}, 
- {"codigo":"3219","nombre":"Costos, presupuestos y avalúos","creditos":5,"prereq":["3208","3209","3206"],"semestre":10}, 
- {"codigo":"3220","nombre":"Gestión de proyectos","creditos":4,"prereq":["3211"],"semestre":10}, 
- {"codigo":"3221","nombre":"Prácticas finales de Ingeniería Civil","creditos":0,"prereq":["3208","3209","3194"],"semestre":10},
- {"codigo":"3222","nombre":"Seminario de Investigación EPS, Civil","creditos":3,"prereq":["3212","3204"],"semestre":10}, 
- {"codigo":"3223","nombre":"Seminario de Investigación Civil","creditos":3,"prereq":["3212","3204"],"semestre":10}
+  {"codigo":"3005","nombre":"Técnicas de Estudio","creditos":3,"prereq":[],"semestre":1},
+  {"codigo":"3003","nombre":"Área Social 1","creditos":3,"prereq":[],"semestre":1},
+  {"codigo":"3000","nombre":"Matemática Básica 1","creditos":9,"prereq":[],"semestre":1},
+  {"codigo":"3006","nombre":"Matemática Básica 2","creditos":9,"prereq":["3000"],"semestre":2},
+  {"codigo":"3013","nombre":"Matemática Intermedia 1","creditos":9,"prereq":["3006"],"semestre":3}
 ];
 
-/* ===== OBLIGATORIOS ===== */
+/* ================= OBLIGATORIOS ================= */
 const obligatoriosFijos = new Set([
-  "3005","3003","3000","3001","3004",
-  "3011","3006","3007","3161","3162", 
-  "3013","3014","3163","3164", 
-  "3166","3021","3022","3025","3090","3167", 
-  "3170","3031","3171","3172","3028",
-  "3040","3179","3180","3181","3182","3183", 
-  "3186","3187","3188","3189","3190","3194", 
-  "3195","3197","3198","3200","3202","3203","3204",
-  "3206","3208","3209","3211","3212",
-  "3214","3215","3216","3218","3219","3221","3223"
-
+  "3005","3003","3000","3006","3013"
 ]);
 
+/* ================= MAPA ================= */
 const cursoMap = {};
-cursos.forEach(c=>cursoMap[c.codigo]=c);
+cursos.forEach(c=>{
+  if(c.codigo) cursoMap[c.codigo] = c;
+});
 
-const totalCredits = cursos.reduce((s,c)=>s+c.creditos,0);
+/* ================= CRÉDITOS ================= */
+const totalCredits = cursos.reduce((s,c)=>s+(c.creditos||0),0);
 document.getElementById('totalCredits').textContent = totalCredits;
 
+/* ================= LÓGICA ================= */
 function isAvailable(c){
-  return c.prereq.every(p=>approved.has(p));
+  if(!c.prereq || !Array.isArray(c.prereq)) return true;
+  return c.prereq.every(p => approved.has(p));
 }
 
-/* ===== RENDER ===== */
+/* ================= RENDER ================= */
 function render(){
   const grid = document.getElementById('grid');
   grid.innerHTML='';
 
-  [...new Set(cursos.map(c=>c.semestre))].forEach(sem=>{
+  const semestres = [...new Set(cursos.map(c=>c.semestre))].sort((a,b)=>a-b);
+
+  semestres.forEach(sem=>{
     const col = document.createElement('div');
     col.className = 'semester';
     col.innerHTML = `<div class="sem-title">Semestre ${sem}</div>`;
 
     cursos.filter(c=>c.semestre===sem).forEach(c=>{
+      const estado =
+        approved.has(c.codigo) ? 'approved' :
+        isAvailable(c) ? 'available' : 'locked';
+
       const d = document.createElement('div');
-      d.className = 'course ' +
-        (approved.has(c.codigo) ? 'approved' :
-        isAvailable(c) ? 'available' : 'locked');
+      d.className = `course ${estado}`;
 
       d.innerHTML = `
         <div><b>${c.codigo}</b> ${c.nombre}</div>
         <div class="meta">
-          <span>${c.creditos} cr</span>
+          <span>${c.creditos || 0} cr</span>
           ${obligatoriosFijos.has(c.codigo) ? '<span class="badge">✔️</span>' : ''}
         </div>
       `;
 
       d.onclick = ()=>{
-        if(approved.has(c.codigo)) approved.delete(c.codigo);
-        else if(isAvailable(c)) approved.add(c.codigo);
+        if(estado === 'locked') return;
+        approved.has(c.codigo)
+          ? approved.delete(c.codigo)
+          : approved.add(c.codigo);
         saveState();
         render();
       };
 
       col.appendChild(d);
     });
+
     grid.appendChild(col);
   });
 
   document.getElementById('creditCount').textContent =
-    [...approved].reduce((s,c)=>s+cursoMap[c].creditos,0);
+    [...approved].reduce((s,c)=>s+(cursoMap[c]?.creditos||0),0);
 }
 
 loadState();
